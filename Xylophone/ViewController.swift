@@ -19,13 +19,18 @@ class ViewController: UIViewController {
     
 
     @IBAction func KeyCPressed(_ sender: UIButton) {
-        print("C got printed")
-        playSound()
+        print(sender.currentTitle)
+        playSound(soundName: sender.currentTitle!)
+        sender.alpha = 0.7
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            //Bring's sender's opacity back up to fully opaque.
+            sender.alpha = 1.0
+        }
     }
     
-    func playSound() {
-        let pianoSound = URL(fileURLWithPath: Bundle.main.path(forResource: "C", ofType: "wav")!)
+    func playSound(soundName: String) {
+        let pianoSound = URL(fileURLWithPath: Bundle.main.path(forResource: soundName, ofType: "wav")!)
         player = try! AVAudioPlayer(contentsOf: pianoSound)
         player.play()
     }
